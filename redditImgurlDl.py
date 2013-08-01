@@ -1,10 +1,31 @@
 #!/usr/bin/python2.7
+
+# this script simply goes through a reddit subreddit, and downloads all the imgur images
+# that have been posted in the subreddit, including albums, and throws all the images
+# into a single folder.
+
+# the script isn't designed to be easy to use, there are a few things that need to be
+# configured, mostly, the download folder and the user agent
+
+# reddit API
 import praw
+
+# searching through HTML
 from lxml import etree
+
+# getting stuff from the Internet
 import urllib2
+
+# determining script path
 import os
+
+# determining path of script
 import inspect
+
+# built in delay to be nice to the servers
 import time
+
+# for command line arguments
 import sys
 
 # subreddit less the "/r"
@@ -19,6 +40,7 @@ if len(subreddit) < 1 or limit < 1:
     exit (1)
 
 script_path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) + "/"
+# this folder must be manually created
 dl_folder = 'dls/'
 
 # there must be a file (useragent.txt) in the directory containing a user agent on the first line
