@@ -7,6 +7,10 @@
 # the script isn't designed to be easy to use, there are a few things that need to be
 # configured, mostly, the download folder and the user agent
 
+# --usage--
+# subreddit less the "/r"
+# post limit
+
 # reddit API
 import praw
 
@@ -28,8 +32,6 @@ import time
 # for command line arguments
 import sys
 
-# subreddit less the "/r"
-# post limit
 
 subreddit = str(sys.argv[1])
 limit = int(sys.argv[2])
