@@ -88,6 +88,7 @@ for x in submissions:
     if url[-3:] == 'jpg' or url[-3:] == 'peg' or url[-3:] == 'png' or url[-3:] == 'gif':
         # just download, we have a direct link
         imageDownload(url)
+        new_count += 1
     else:
         opener = urllib2.build_opener()
         try:
