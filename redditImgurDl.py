@@ -15,8 +15,7 @@
 
 # known problem:
 # will not handle imgur links, where the picture ids are separated by commas in the url
-# a llinked file like "...e.png?1" will not work right, I should just strip stuff after the question mark
-# the count might be off by 1, or more
+# a linked file like "...e.png?1" will not work right
 
 # reddit API
 import praw
