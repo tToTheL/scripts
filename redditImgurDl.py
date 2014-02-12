@@ -11,6 +11,12 @@
 # subreddit less the "/r"
 # post limit
 
+
+# known problem:
+# will not handle imgur links, where the picture ids are separated by commas in the url
+# a llinked file like "...e.png?1" will not work right, I should just strip stuff after the question mark
+# the count might be off by 1, or more
+
 # reddit API
 import praw
 
@@ -35,15 +41,16 @@ import sys
 
 def imageDownload(img_url):
     filename =  img_url.rsplit('/', 1)[1]
-    print filename
     if not os.path.exists(script_path + dl_folder + filename):
-        time.sleep(10)
         opener = urllib2.build_opener()
         response = opener.open(img_url)
         f = open(script_path + dl_folder + filename, 'w')
         f.write(response.read())
         f.close
+        print "Downloaded: %s" % (filename)
+        time.sleep(10)
         return True
+    print "Skipped (already exists): %s" % (filename)
     return False
 
 
@@ -78,7 +85,7 @@ new_count = 0
 for x in submissions:
     url = x.__getattribute__('url')
 
-    if url[-3:] == 'jpg' or url[-3:] == 'png' or url[-3:] == 'gif':
+    if url[-3:] == 'jpg' or url[-3:] == 'peg' or url[-3:] == 'png' or url[-3:] == 'gif':
         # just download, we have a direct link
         imageDownload(url)
     else:
@@ -93,6 +100,20 @@ for x in submissions:
 
             if len(els) == 0:
                 els = tree.xpath("//div[@id='image']/div/a/@href")
+
+            if len(els) == 0:
+                els = tree.xpath("//div[@id='image']/div/img/@src")
+
+            if len(els) == 0:
+                els = tree.xpath("//div[@class='image textbox']/a/@href")
+
+
+
+            if len(els) == 0:
+                print ""
+                print "Did not find imgur image at: %s" % (url)
+                print "Could not find imgur link with post title: %s" % (x.__getattribute__('title'))
+                print ""
 
             # if the link isn't imgur, this should be fine, it will just be a loop of zero
             for img_url in els:
