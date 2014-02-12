@@ -8,8 +8,9 @@
 # configured, mostly, the download folder and the user agent
 
 # --usage--
-# subreddit less the "/r"
-# post limit
+# subreddit post limit
+# ex
+# python redditImgurDl.py pics 3
 
 
 # known problem:
